@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './App.css'
+// import './App.css'
 import SearchBar from "./components/SearchBar/SearchBar"
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
       <div>
       
       </div>
-      <h1>Vite + React</h1>
+      {/* <h1>Vite + React</h1> */}
       <SearchBar value={searchbar} onsearchbar={setSearchBar} />
   
      
