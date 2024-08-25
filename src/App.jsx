@@ -7,10 +7,11 @@ import { SearchForm } from "./components/SearchForm";
 
 const ArticleList = ({ items }) => (
   <ul>
-    {items.data.map(({ id, urls, alt_description }) => (
-      
+
+    {items.map(({ id, urls, alt_description }) => (
+     
       <li key={id}>
-         console.log(id);
+        {id}
         <a href={urls} target="_blank" rel="noreferrer noopener">
           {alt_description}
         </a>
@@ -33,8 +34,8 @@ const App = () => {
       setError(false);
       setLoading(true);
       const data = await fetchArticlesWithTopic(topic);
-      console.log(data);
-      setArticles(data);
+      console.log("data",data);
+      setArticles(data.data);
     } catch (error) {
       setError(true);
     } finally {
