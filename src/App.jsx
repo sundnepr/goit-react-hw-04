@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 
 // 1. Імпортуємо HTTP-функцію
 import { fetchArticlesWithTopic } from "./components/articles-api";
-import { SearchForm } from "./components/SearchForm";
-
+// import { SearchForm } from "./components/SearchForm";
+import { SearchBar } from "./components/SearchBar/SearchBar";
+import { ImageGallery } from "./components/ImageGallery/ImageGallery";
+import { ImageGalleryItem } from "./components/ImageCard/ImageCard";
 const ArticleList = ({ items }) => (
   <ul>
 
@@ -25,6 +27,7 @@ const App = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [images, setImages] = useState([]);
 
   /* Код ефекту */
 
@@ -33,9 +36,15 @@ const App = () => {
       setArticles([]);
       setError(false);
       setLoading(true);
-      const data = await fetchArticlesWithTopic(topic);
-      console.log("data",data);
-      setArticles(data.data);
+      //const data = await fetchArticlesWithTopic(topic);
+      const images = await fetchArticlesWithTopic(topic);
+      console.log("images", images);
+   
+       setImages(prevState => [...prevState, ...images.data]);
+      // console.log("data",data);
+      // setArticles(data.data);
+
+
     } catch (error) {
       setError(true);
     } finally {
@@ -47,8 +56,13 @@ const App = () => {
 
   return (
     <div>
-      <h1>Latest articles</h1>
-      <SearchForm onSearch={handleSearch} />
+      <SearchBar onSearch={handleSearch} />
+      {/* <SearchForm onSearch={handleSearch} /> */}
+       <ImageGallery>
+        {images.map(image => (
+          <ImageGalleryItem key={image.id} image={image} /> //onClick={openModal} 
+        ))}
+      </ImageGallery>
       {loading && <p>Loading data, please wait...</p>}
       {error && (
         <p>Whoops, something went wrong! Please try reloading this page!</p>

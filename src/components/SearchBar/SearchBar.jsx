@@ -2,20 +2,19 @@ import css from "./SearchBar.module.css";
 import { CiSearch } from "react-icons/ci";
 import toast from "react-hot-toast";
 
-const SearchBar = ({ setSearchBar }) => {
-  console.log("2222");
+export const SearchBar = ({ onSearch }) => {
   const handleSearch = (e) => {
     e.preventDefault();
     const form = e.target;
     const search = form.elements.search.value;
+    console.log("search", search);
     
+
     if (search.trim() === "") {
       toast.error("Enter text to search for images.");
     }
-
+    onSearch (search);
     form.reset();
-
-    setSearchBar(search);
   };
 
   return (
